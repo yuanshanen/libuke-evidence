@@ -1,0 +1,36 @@
+<view class="page records-page">
+  <view class="search-select">
+    <view class="search-icon"></view>
+    <picker mode="selector" range="{{filterOptions}}" value="{{selectedFilterIndex}}" bindchange="onFilterChange">
+      <view class="control filter-control">
+        <text>{{filterOptions[selectedFilterIndex]}}</text>
+      </view>
+    </picker>
+  </view>
+
+  <view class="record-list">
+    <block wx:for="{{visibleRecords}}" wx:key="id">
+      <view class="report-card card" data-index="{{index}}" bindtap="openRecordDetail">
+        <view class="thumb {{item.thumbClass}}">
+          <image wx:if="{{item.coverImageUrl}}" class="thumb-image" src="{{item.coverImageUrl}}" mode="aspectFill"></image>
+          <view wx:else class="thumb-placeholder"></view>
+          <text wx:if="{{item.imageBadgeText}}" class="image-badge">{{item.imageBadgeText}}</text>
+        </view>
+        <view class="record-main">
+          <view class="record-title-row">
+            <text class="record-title">{{item.category}}</text>
+            <text class="{{item.statusClass}}">{{item.statusText}}</text>
+          </view>
+          <text class="record-sub">{{item.subCategory}}</text>
+          <text class="record-time">{{item.submittedAt}}</text>
+        </view>
+        <text class="card-arrow">›</text>
+      </view>
+    </block>
+  </view>
+
+  <view wx:if="{{!visibleRecords.length}}" class="empty-state">
+    <view class="empty-icon"></view>
+    <text>暂无记录</text>
+  </view>
+</view>

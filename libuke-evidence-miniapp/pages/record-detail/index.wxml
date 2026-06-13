@@ -1,0 +1,61 @@
+<view class="page detail-page">
+  <view class="summary-card card">
+    <view class="summary-title-row">
+      <text class="sub-category">{{subCategory}}</text>
+      <text class="{{statusClass}}">{{statusText}}</text>
+    </view>
+    <text class="category">{{category}}</text>
+    <text class="report-no">编号 {{reportNo}}</text>
+  </view>
+
+  <view class="info-card card">
+    <view class="info-row">
+      <text class="info-label">所属小区</text>
+      <text class="info-value">{{community}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">地理位置</text>
+      <text class="info-value">{{location}}</text>
+    </view>
+    <view wx:if="{{hasLocation}}" class="location-map-row">
+      <map
+        class="detail-map"
+        latitude="{{latitude}}"
+        longitude="{{longitude}}"
+        circles="{{locationCircles}}"
+        scale="{{mapScale}}"
+        enable-scroll="{{false}}"
+        enable-zoom="{{false}}"
+        enable-rotate="{{false}}"
+        enable-overlooking="{{false}}"
+        enable-3D="{{false}}"
+      />
+    </view>
+    <view class="info-row">
+      <text class="info-label">提交时间</text>
+      <text class="info-value">{{submittedAt}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">备注</text>
+      <text class="info-value">{{remark}}</text>
+    </view>
+  </view>
+
+  <view class="image-section card">
+    <view class="section-head">
+      <text>附件</text>
+      <text>{{imageCount}} 个</text>
+    </view>
+    <view class="attachment-grid">
+      <block wx:for="{{attachments}}" wx:key="id">
+        <view class="attachment-tile" data-index="{{index}}" bindtap="previewAttachment">
+          <image wx:if="{{item.isImage}}" class="attachment-image" src="{{item.url}}" mode="aspectFill"></image>
+          <view wx:else class="attachment-placeholder">
+            <text>附件</text>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view wx:if="{{!attachments.length}}" class="attachment-empty">暂无附件</view>
+  </view>
+</view>

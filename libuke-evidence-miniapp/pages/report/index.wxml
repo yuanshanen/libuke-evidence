@@ -1,0 +1,102 @@
+<view class="page report-page">
+  <view class="community-card card">
+    <text class="community-name">{{communityName || "未选择小区"}}</text>
+    <view class="choose-btn" bindtap="openCommunityModal">选择</view>
+  </view>
+
+  <view class="form-card card">
+    <view class="field">
+      <text class="field-label">问题大类</text>
+      <picker mode="selector" range="{{categoryNames}}" value="{{selectedCategoryIndex}}" bindchange="onCategoryChange">
+        <view class="control picker-control">
+          <text>{{categoryNames[selectedCategoryIndex]}}</text>
+          <text class="chevron">⌄</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="field">
+      <text class="field-label">常见问题</text>
+      <picker mode="selector" range="{{subCategoryOptions}}" value="{{selectedSubCategoryIndex}}" bindchange="onSubCategoryChange">
+        <view class="control picker-control">
+          <text>{{subCategoryOptions[selectedSubCategoryIndex]}}</text>
+          <text class="chevron">⌄</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="field">
+      <text class="field-label">地理位置</text>
+      <view class="map-box">
+        <map
+          class="map"
+          latitude="{{latitude}}"
+          longitude="{{longitude}}"
+          scale="{{mapScale}}"
+          show-location="{{true}}"
+          enable-scroll="{{false}}"
+          enable-zoom="{{false}}"
+          enable-rotate="{{false}}"
+          enable-overlooking="{{false}}"
+          enable-poi="{{true}}"
+        ></map>
+        <view class="map-location-dot"></view>
+        <view class="map-label">{{locationName}}</view>
+      </view>
+      <text wx:if="{{locationWarning}}" class="location-warning">{{locationWarning}}</text>
+      <view class="location-actions">
+        <view class="location-action primary" bindtap="chooseCustomLocation">选择位置</view>
+        <view class="location-action" bindtap="useCurrentLocation">重新定位</view>
+      </view>
+    </view>
+
+    <view class="field">
+      <text class="field-label">图片附件（1-{{maxFileCount}} 张）</text>
+      <view class="upload-grid">
+        <block wx:for="{{images}}" wx:key="index">
+          <view class="upload-tile filled" data-index="{{index}}" bindtap="previewImage">
+            <image class="upload-image" src="{{item}}" mode="aspectFill"></image>
+            <view class="remove-image-btn" data-index="{{index}}" catchtap="removeImage">×</view>
+          </view>
+        </block>
+        <view wx:if="{{images.length < maxFileCount}}" class="upload-tile add-upload" bindtap="chooseImage">
+          <text>+</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="field">
+      <text class="field-label">备注</text>
+      <input class="remark-control" value="{{remark}}" placeholder="请输入备注" maxlength="100" bindinput="onRemarkInput" />
+    </view>
+
+    <view class="submit-row">
+      <view class="submit-btn" bindtap="submitReport">提交记录</view>
+    </view>
+    <view class="history-row">
+      <view class="history-btn" bindtap="goRecords">查看记录</view>
+    </view>
+  </view>
+
+  <view wx:if="{{showCommunityModal}}" class="modal-mask">
+    <view class="modal">
+      <text class="modal-title">选择小区</text>
+      <text class="modal-desc">输入小区邀请码后关联具体小区。取证人信息可以选填，用于后续证据记录归档。</text>
+
+      <view class="field">
+        <text class="field-label">小区邀请码</text>
+        <input class="control input-control" value="{{inviteCode}}" placeholder="请输入小区邀请码" bindinput="onInviteCodeInput" />
+      </view>
+
+      <view class="field">
+        <text class="field-label">取证人信息（选填）</text>
+        <input class="control input-control" value="{{witnessCode}}" placeholder="如：7-2-34-01" bindinput="onWitnessCodeInput" />
+      </view>
+
+      <view class="modal-actions">
+        <view class="secondary-btn" bindtap="closeCommunityModal">取消</view>
+        <view class="confirm-btn" bindtap="confirmCommunity">确认</view>
+      </view>
+    </view>
+  </view>
+</view>

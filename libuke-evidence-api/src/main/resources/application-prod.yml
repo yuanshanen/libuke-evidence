@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: libuke-evidence-api
+  profiles:
+    active: local
+  mvc:
+    servlet:
+      load-on-startup: 1
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 90MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/libuke_evidence?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 10
+      initialization-fail-timeout: 30000
+      connection-timeout: 10000
+      validation-timeout: 3000
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+
+app:
+  cors:
+    allowed-origin-patterns: ${APP_CORS_ALLOWED_ORIGIN_PATTERNS:http://localhost:*,http://127.0.0.1:*}
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: assign_id
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+amap:
+  map:
+    key: ${AMAP_MAP_KEY:}
+    reverse-geocode-key: ${AMAP_REVERSE_GEOCODE_KEY:${AMAP_MAP_KEY:}}
+    js-api-key: ${AMAP_JS_API_KEY:}
+    js-api-security-key: ${AMAP_JS_API_SECURITY_KEY:}
+    reverse-geocoder-url: https://restapi.amap.com/v3/geocode/regeo
+    connect-timeout-millis: 3000
+    read-timeout-millis: 5000
+
+wechat:
+  miniapp:
+    app-id: ${WECHAT_MINIAPP_APP_ID:}
+    app-secret: ${WECHAT_MINIAPP_APP_SECRET:}
+    code2session-url: https://api.weixin.qq.com/sns/jscode2session
+    connect-timeout-millis: 3000
+    read-timeout-millis: 5000
+
+watermark:
+  font:
+    name: ${WATERMARK_FONT_NAME:Noto Sans CJK SC}
+    path: ${WATERMARK_FONT_PATH:}

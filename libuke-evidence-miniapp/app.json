@@ -1,0 +1,24 @@
+{
+  "pages": [
+    "pages/report/index",
+    "pages/records/index",
+    "pages/record-detail/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "物业服务取证",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f9fa"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于在问题上报时展示当前所在地点"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "chooseLocation"
+  ],
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
